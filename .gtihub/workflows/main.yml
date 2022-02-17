@@ -1,0 +1,27 @@
+name: Daily Quote
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Runs at 3am UTC - 8:30am IST
+    - cron: '00 3 * * *'
+
+jobs:
+  update-readme:
+    name: Update this repo's README
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            export PATH="$PATH:$(npm bin -g)"
+            export PATH="$PATH:$(yarn global bin)"
+            cd ~/wizemen-qotd
+            git pull;
+            yarn start
