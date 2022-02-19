@@ -24,4 +24,5 @@ jobs:
             export PATH="$PATH:$(yarn global bin)"
             cd ~/wizemen-qotd
             git pull;
+            yarn install;
             yarn start
