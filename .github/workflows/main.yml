@@ -3,8 +3,8 @@ name: Daily Quote
 on:
   workflow_dispatch:
   schedule:
-    # Runs at 3am UTC - 8:30am IST
-    - cron: '00 3 * * *'
+    # Runs at 2:30am UTC - 8qm IST
+    - cron: '30 2 * * *'
 
 jobs:
   update-readme:
