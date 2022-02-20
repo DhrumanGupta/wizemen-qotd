@@ -1,6 +1,7 @@
 require('dotenv').config()
 const axios = require('axios')
 const { createWorker } = require ('tesseract.js');
+const {decode} = require('html-entities')
 
 const worker = createWorker({
     // logger: m => console.log(m)
@@ -23,7 +24,7 @@ const findUntilEnd = ({data, searchString}) => {
             startIndex = data.length + 1;
         }
     }
-    return finalString
+    return decode(finalString, {level: 'html5'})
 }
 
 const doCaptcha = async () => {
