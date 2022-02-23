@@ -130,6 +130,8 @@ const run = async () => {
     await axios.post(webhook, {
       content: `> ${quote}\n${person}`,
     });
+    
+    console.log(`${quote} ~ ${person}`)
   } catch (e) {
     console.error(e);
   }
