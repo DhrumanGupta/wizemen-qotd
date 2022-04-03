@@ -17,7 +17,7 @@ jobs:
           node-version: "16.x"
       - run: npm install
       - run: npm start
-      - env:
+        env:
           EMAIL: ${{ secrets.EMAIL }}
           PASSWORD: ${{ secrets.PASSWORD }}
           WEBHOOK: ${{ secrets.WEBHOOK }}
