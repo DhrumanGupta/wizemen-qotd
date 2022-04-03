@@ -4,25 +4,20 @@ on:
   workflow_dispatch:
   schedule:
     # Runs at 2:30am UTC - 8qm IST
-    - cron: '30 2 * * *'
+    - cron: "30 2 * * *"
 
 jobs:
   update-readme:
-    name: Update this repo's README
+    name: Run node here
     runs-on: ubuntu-latest
     steps:
-      - name: executing remote ssh commands using password
-        uses: appleboy/ssh-action@master
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          script: |
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            export PATH="$PATH:$(npm bin -g)"
-            export PATH="$PATH:$(yarn global bin)"
-            cd ~/wizemen-qotd
-            git pull;
-            yarn install;
-            yarn start
+          node-version: "16.x"
+      - run: npm install
+      - run: npm start
+      - env:
+          EMAIL: ${{ secrets.EMAIL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          WEBHOOK: ${{ secrets.WEBHOOK }}
