@@ -1,8 +1,15 @@
 import axios from "axios"
 import cheerio from "cheerio"
 import * as dotenv from 'dotenv'
+import { dirname } from 'path'
+import { fileURLToPath } from 'url'
 
-dotenv.config()
+// Jugaad to properly set the current directory when it is loaded from CRON
+// https://stackoverflow.com/a/50052194
+// https://stackoverflow.com/a/50052194
+const __dirname = dirname(fileURLToPath(import.meta.url))
+dotenv.config({path: __dirname + '/.env'})
+
 async function scrape(){
     const response = await axios.post("https://psn.wizemen.net/homecontrollers/login/validateUser", {captcha: "", emailid: process.env.EMAIL , int_cnt: "0", pwd: process.env.PASSWORD, rememberMe: true, schoolCode: "PSN", schoolName: "Pathways School Noida"})
     const cookie = response.headers["set-cookie"][0]
